@@ -11,201 +11,305 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Montserrat:wght@200;400;600&display=swap');
 
-        :root { --gold: #c5a059; --dark: #050505; --soft-gray: #1a1a1a; }
+        :root { 
+            --gold: #c5a059; 
+            --dark: #050505; 
+            --glass: rgba(255, 255, 255, 0.03);
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--dark); color: #fff; font-family: 'Montserrat', sans-serif; line-height: 1.6; overflow-x: hidden; }
+        body { 
+            background: var(--dark); 
+            color: #fff; 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        /* --- LOGO STYLING --- */
+        .brand-logo {
+            height: 70px;
+            width: auto;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 5px; /* Thoda soft look ke liye */
+        }
+        .footer-logo-img {
+            height: 120px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+        }
 
         /* --- LUXURY LOADER --- */
-        #loader { position: fixed; height: 100vh; width: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; }
-        .loader-text { font-family: 'Cinzel Decorative'; color: var(--gold); font-size: 2rem; letter-spacing: 5px; animation: pulse 2s infinite; }
+        #loader { 
+            position: fixed; height: 100vh; width: 100%; 
+            background: #000; z-index: 9999; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+        }
+        .loader-logo {
+            width: 150px;
+            margin-bottom: 20px;
+            animation: breathe 3s ease-in-out infinite;
+            border-radius: 10px;
+        }
 
         /* --- NAVIGATION --- */
-        nav { position: fixed; width: 100%; padding: 30px 6%; display: flex; justify-content: space-between; z-index: 1000; transition: 0.6s; }
-        nav.scrolled { background: rgba(0,0,0,0.95); padding: 15px 6%; border-bottom: 1px solid rgba(197, 160, 89, 0.3); }
-        .logo { font-family: 'Cinzel Decorative'; color: var(--gold); font-size: 1.8rem; font-weight: bold; text-decoration: none; }
-        .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        nav { 
+            position: fixed; width: 100%; padding: 30px 6%; 
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; transition: 0.5s; 
+        }
+        nav.scrolled { 
+            background: rgba(0,0,0,0.95); 
+            backdrop-filter: blur(10px);
+            padding: 12px 6%; 
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
+        }
+        .nav-links { display: flex; gap: 35px; list-style: none; align-items: center; }
+        .nav-links a { 
+            color: #fff; text-decoration: none; font-size: 0.75rem; 
+            letter-spacing: 2px; text-transform: uppercase; transition: 0.3s;
+            font-weight: 400;
+        }
         .nav-links a:hover { color: var(--gold); }
 
         /* --- HERO --- */
-        .hero { height: 110vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-        .hero-video-bg { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; z-index: -1; }
-        .hero-content { text-align: center; }
-        .hero-content h1 { font-family: 'Cinzel Decorative'; font-size: clamp(3rem, 8vw, 6rem); color: var(--gold); margin-bottom: 20px; line-height: 1; }
-        .tagline { font-size: 1.2rem; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 40px; color: #fff; font-weight: 200; }
+        .hero { 
+            height: 100vh; display: flex; align-items: center; 
+            justify-content: center; position: relative; overflow: hidden; 
+        }
+        .hero-video-bg { 
+            position: absolute; width: 100%; height: 100%; 
+            object-fit: cover; opacity: 0.35; z-index: -1; 
+        }
+        .hero-content { text-align: center; z-index: 1; }
+        .hero-content h1 { 
+            font-family: 'Cinzel Decorative'; font-size: clamp(2.5rem, 8vw, 6rem); 
+            color: var(--gold); margin-bottom: 15px; line-height: 1.1;
+        }
 
-        /* --- CATEGORIES (THE FINAL TOUCH) --- */
-        .section-title { text-align: center; padding: 100px 0 50px; }
-        .section-title h2 { font-family: 'Cinzel Decorative'; color: var(--gold); font-size: 3rem; }
+        /* --- INNOVATIVE CATEGORIES --- */
+        .section-title { text-align: center; padding: 120px 0 60px; }
+        .section-title h2 { font-family: 'Cinzel Decorative'; color: var(--gold); font-size: 3.5rem; letter-spacing: 2px; }
         
-        .cat-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; padding: 0; }
-        .cat-box { height: 700px; position: relative; overflow: hidden; cursor: pointer; }
-        .cat-box img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s; filter: grayscale(40%); }
-        .cat-box:hover img { transform: scale(1.15); filter: grayscale(0) brightness(0.6); }
-        .cat-info { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.4); transition: 0.5s; }
-        .cat-info h3 { font-family: 'Cinzel Decorative'; font-size: 3rem; color: var(--gold); }
-        .cat-info p { letter-spacing: 3px; font-weight: 200; margin-top: 10px; }
+        .cat-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; padding: 0 30px 30px; }
+        .cat-box { 
+            height: 700px; position: relative; overflow: hidden; 
+            border-radius: 4px; border: 1px solid #1a1a1a;
+        }
+        .cat-img-wrapper { width: 100%; height: 100%; position: relative; }
+        .cat-box img { 
+            width: 100%; height: 120%; /* Extra height for parallax */
+            object-fit: cover; position: absolute; top: -10%; 
+            transition: 0.8s ease-out; filter: brightness(0.7);
+        }
+        .cat-box:hover img { filter: brightness(0.5); }
+        
+        .cat-info { 
+            position: absolute; inset: 0; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; z-index: 2;
+        }
+        .cat-info h3 { 
+            font-family: 'Cinzel Decorative'; font-size: 3rem; color: var(--gold); 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+        .cat-info p { letter-spacing: 5px; font-weight: 200; margin-top: 10px; text-transform: uppercase; }
 
-        /* --- ORDER & COMPLAINT (MODERN STYLE) --- */
-        .form-section { padding: 100px 10%; background: #0a0a0a; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-        .form-wrapper h2 { font-family: 'Cinzel Decorative'; color: var(--gold); margin-bottom: 30px; }
-        input, select, textarea { width: 100%; padding: 20px; background: transparent; border: none; border-bottom: 1px solid #333; color: #fff; margin-bottom: 30px; outline: none; transition: 0.4s; }
-        input:focus { border-bottom-color: var(--gold); }
-        .gold-btn { background: var(--gold); color: #000; border: none; padding: 20px 40px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: 0.4s; }
+        /* --- MODERN FORM SECTION --- */
+        .form-section { padding: 100px 8%; background: #080808; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .form-card { 
+            background: var(--glass); padding: 50px; border-radius: 20px; 
+            border: 1px solid rgba(197, 160, 89, 0.1); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .form-card h2 { font-family: 'Cinzel Decorative'; color: var(--gold); margin-bottom: 35px; }
+        input, textarea { 
+            width: 100%; padding: 18px; background: rgba(0,0,0,0.5); 
+            border: 1px solid #222; color: #fff; margin-bottom: 25px; 
+            border-radius: 5px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--gold); }
+        .gold-btn { 
+            background: var(--gold); color: #000; border: none; width: 100%; 
+            padding: 20px; font-weight: bold; cursor: pointer; letter-spacing: 3px; 
+            text-transform: uppercase; transition: 0.4s;
+        }
         .gold-btn:hover { background: #fff; transform: translateY(-5px); }
 
         /* --- FOOTER --- */
-        footer { padding: 100px 10% 50px; background: #000; border-top: 1px solid #1a1a1a; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 100px; }
-        .footer-logo { font-family: 'Cinzel Decorative'; font-size: 2rem; color: var(--gold); }
-        .contact-large { font-size: 2.5rem; color: #fff; margin: 20px 0; font-weight: 600; }
+        footer { padding: 100px 8% 50px; background: #000; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 80px; }
 
-        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .cat-container, .form-section, .footer-grid { grid-template-columns: 1fr; }
-            .hero-content h1 { font-size: 3rem; }
+            .cat-box { height: 500px; }
+            .brand-logo { height: 50px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="loader"><div class="loader-text">EST. 1958</div></div>
+    <div id="loader">
+        <img src="logo.jpeg" alt="SPC Logo" class="loader-logo">
+        <div style="color: var(--gold); letter-spacing: 8px; font-size: 0.8rem;">ESTABLISHED 1958</div>
+    </div>
 
     <nav id="navbar">
-        <a href="#" class="logo">SPC 1958</a>
+        <a href="#">
+            <img src="logo.jpeg" alt="SPC 1958" class="brand-logo">
+        </a>
         <ul class="nav-links">
-            <li><a href="#about">Legacy</a></li>
             <li><a href="#collection">Collection</a></li>
-            <li><a href="#order">Order</a></li>
-            <li><a href="tel:8824937013">Call: 8824937013</a></li>
+            <li><a href="#order">Place Order</a></li>
+            <li><a href="https://wa.me/918824937013">Support</a></li>
         </ul>
     </nav>
 
     <section class="hero">
-        <video autoplay muted loop class="hero-video-bg">
+        <video autoplay muted loop playsinline class="hero-video-bg">
             <source src="your-video.mp4" type="video/mp4">
         </video>
         <div class="hero-content">
-            <p class="tagline">Purity in Every Thread</p>
+            <p style="letter-spacing: 10px; text-transform: uppercase; margin-bottom: 20px; font-weight: 200;">Purity in Every Thread</p>
             <h1>SHAH PRATAPMAL<br>CHAMPALAL</h1>
-            <p style="letter-spacing: 4px; color: var(--gold);">THE ROYAL DESTINATION OF SOJAT ROAD</p>
+            <p style="color: var(--gold); letter-spacing: 5px; font-weight: 600; margin-top: 10px;">THE ROYAL DESTINATION • SOJAT ROAD</p>
         </div>
     </section>
 
     <section class="section-title" id="collection">
-        <span>Curated Departments</span>
-        <h2>The Elite Selection</h2>
+        <span>Since 1958</span>
+        <h2>The Royal Gallery</h2>
     </section>
 
     <div class="cat-container">
         <div class="cat-box">
-            <img src="https://images.unsplash.com/photo-1603251480018-93666f733630?q=80" alt="Rajputi">
+            <div class="cat-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1603251480018-93666f733630?q=80" alt="Rajputi" class="parallax-img">
+            </div>
             <div class="cat-info">
                 <h3>Rajputi Poshak</h3>
-                <p>PURE GEORGETTE & TORA</p>
+                <p>Pure Georgette & Tora</p>
             </div>
         </div>
         <div class="cat-box">
-            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80" alt="Suits">
+            <div class="cat-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80" alt="Suits" class="parallax-img">
+            </div>
             <div class="cat-info">
                 <h3>Executive Suits</h3>
-                <p>KOT-PANT & SHIRTING THAAN</p>
+                <p>Kot-Pant & Branded Thaan</p>
             </div>
         </div>
         <div class="cat-box">
-            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80" alt="Home">
+            <div class="cat-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?q=80" alt="Bedding" class="parallax-img">
+            </div>
             <div class="cat-info">
-                <h3>Home Furnishing</h3>
-                <p>CURTAINS & SOFA SETS</p>
+                <h3>Luxury Bedding</h3>
+                <p>Designer Sheets & Blankets</p>
             </div>
         </div>
         <div class="cat-box">
-            <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?q=80" alt="Bedding">
+            <div class="cat-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80" alt="Home" class="parallax-img">
+            </div>
             <div class="cat-info">
-                <h3>Premium Bedding</h3>
-                <p>BLANKETS & DESIGNER SHEETS</p>
+                <h3>Furnishing</h3>
+                <p>Premium Curtains & Sofa</p>
             </div>
         </div>
     </div>
 
-    
-
     <section class="form-section" id="order">
-        <div class="form-wrapper">
-            <h2>Place Your Order</h2>
+        <div class="form-card">
+            <h2>Luxury Concierge</h2>
             <form id="waOrder">
-                <input type="text" id="name" placeholder="YOUR NAME" required>
-                <input type="text" id="product" placeholder="PRODUCT (e.g. Pure Odhana, Cotton Suit)" required>
-                <textarea id="details" rows="3" placeholder="YOUR CUSTOM REQUIREMENTS"></textarea>
-                <button type="submit" class="gold-btn">Submit to 8824937013</button>
+                <input type="text" id="name" placeholder="YOUR FULL NAME" required>
+                <input type="text" id="product" placeholder="PRODUCT (e.g. Pure Odhana)" required>
+                <textarea id="details" rows="4" placeholder="ANY SPECIAL REQUIREMENTS?"></textarea>
+                <button type="submit" class="gold-btn">Order on WhatsApp</button>
             </form>
         </div>
-        <div class="form-wrapper">
-            <h2 style="color: #ff4444;">Customer Support</h2>
-            <form>
-                <input type="text" placeholder="ORDER ID / PHONE">
-                <textarea rows="3" placeholder="HOW CAN WE HELP YOU?"></textarea>
-                <button type="button" class="gold-btn" style="background: #ff4444; color: #fff;">Register Complaint</button>
-            </form>
+        <div class="form-card" style="border-top: 4px solid #ff4444;">
+            <h2 style="color: #ff4444;">Priority Support</h2>
+            <p style="color: #888; margin-bottom: 25px;">Facing an issue with your order? Our management team will resolve it within 24 hours.</p>
+            <input type="text" placeholder="ORDER ID / PHONE">
+            <textarea rows="4" placeholder="HOW CAN WE HELP YOU?"></textarea>
+            <button class="gold-btn" style="background: #ff4444; color: white;">Register Complaint</button>
         </div>
     </section>
 
     <footer>
         <div class="footer-grid">
             <div>
-                <div class="footer-logo">SPC 1958</div>
-                <p style="margin-top: 30px; color: #666;">Legacy of trust across 7 decades. Delivering excellence from Sojat Road to all of Rajasthan.</p>
+                <img src="logo.jpeg" alt="SPC Logo" class="footer-logo-img">
+                <p style="color: #888; line-height: 1.8;">Leading the textile industry in Sojat Road for over 7 decades. Excellence, Purity, and Trust since 1958.</p>
             </div>
             <div>
-                <p style="color: var(--gold); letter-spacing: 2px;">CONTACT</p>
-                <div class="contact-large">8824937013</div>
-                <p>Main Bazar, Sojat Road (Pali)</p>
+                <p style="color: var(--gold); letter-spacing: 3px; font-size: 0.8rem;">REACH US</p>
+                <h3 style="font-size: 1.8rem; margin: 15px 0;">8824937013</h3>
+                <p>Main Bazar, Sojat Road (Pali), Rajasthan</p>
             </div>
             <div>
-                <p style="color: var(--gold); letter-spacing: 2px;">SOCIAL</p>
-                <p style="margin-top: 20px;">Instagram / Facebook</p>
-                <p>Shah Pratapmal Champalal</p>
+                <p style="color: var(--gold); letter-spacing: 3px; font-size: 0.8rem;">SOCIALS</p>
+                <p style="margin-top: 20px; font-weight: 600;">Instagram / Facebook</p>
+                <p style="color: #666;">Shah Pratapmal Champalal</p>
             </div>
+        </div>
+        <div style="text-align: center; margin-top: 80px; color: #222; font-size: 0.7rem; letter-spacing: 3px;">
+            &copy; 2026 SHAH PRATAPMAL CHAMPALAL. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
     <script>
-        // GSAP Animations for "Maja" (The Magic Touch)
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hide Loader
+        // Advanced Smooth Loader
         window.onload = () => {
-            gsap.to("#loader", { opacity: 0, duration: 1.5, onComplete: () => document.getElementById("loader").style.display = "none" });
+            gsap.to("#loader", { 
+                y: "-100%", 
+                duration: 1.2, 
+                ease: "power4.inOut", 
+                delay: 1,
+                onComplete: () => document.getElementById("loader").style.display = "none" 
+            });
         };
 
-        // Scroll Navbar
+        // Header Scroll Effect
         window.addEventListener("scroll", () => {
             const nav = document.getElementById("navbar");
-            if(window.scrollY > 100) nav.classList.add("scrolled");
+            if(window.scrollY > 50) nav.classList.add("scrolled");
             else nav.classList.remove("scrolled");
         });
 
-        // ScrollReveal Animations
-        gsap.from(".hero-content", { y: 100, opacity: 0, duration: 1.5, ease: "power4.out" });
-        
-        gsap.utils.toArray(".cat-box").forEach(box => {
-            gsap.from(box, {
-                scrollTrigger: { trigger: box, start: "top 80%" },
-                y: 50, opacity: 0, duration: 1
+        // Innovative Parallax Effect for Product Images
+        gsap.utils.toArray(".parallax-img").forEach(img => {
+            gsap.to(img, {
+                yPercent: 15,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: img.parentElement,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                }
             });
         });
 
-        // WhatsApp Logic
+        // Entrance Animations
+        gsap.from(".hero-content", { opacity: 0, scale: 0.9, duration: 2, ease: "power2.out" });
+
+        // WhatsApp Ordering Logic
         document.getElementById("waOrder").onsubmit = (e) => {
             e.preventDefault();
             const name = document.getElementById("name").value;
             const prod = document.getElementById("product").value;
-            const det = document.getElementById("details").value;
-            const text = `Namaste SPC 1958, I am ${name}. Inquiry for: ${prod}. Note: ${det}`;
-            window.open(`https://wa.me/918824937013?text=${encodeURIComponent(text)}`);
+            const msg = `Namaste SPC 1958,\n\nCustomer Name: *${name}*\nInterested in: *${prod}*\n\nPlease provide more details.`;
+            window.open(`https://wa.me/918824937013?text=${encodeURIComponent(msg)}`);
         };
     </script>
 </body>
